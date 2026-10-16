@@ -13,9 +13,9 @@ for ARCH in armv7 arm64; do
     if [[ "$ARCH" == armv7 ]]; then FLAGS=(-marm); fi
     "$CLANG" --target="$ARCH-apple-ios9.0" -isysroot "$SDK" \
         -fobjc-arc -fmodules -Os -Werror=unguarded-availability \
-        "${FLAGS[@]}" -c OlmosKiosk/main.m -o "$OUT/$ARCH.o"
+        ${FLAGS[@]+"${FLAGS[@]}"} -c OlmosKiosk/main.m -o "$OUT/$ARCH.o"
     "$CLANG" --target="$ARCH-apple-ios9.0" -isysroot "$XCODE13_SDK_PATH" \
-        -fobjc-arc "${FLAGS[@]}" -framework Foundation -framework UIKit -framework WebKit \
+        -fobjc-arc ${FLAGS[@]+"${FLAGS[@]}"} -framework Foundation -framework UIKit -framework WebKit \
         -Xlinker -platform_version -Xlinker ios -Xlinker 9.0 -Xlinker "$SDK_VERSION" \
         "$OUT/$ARCH.o" -o "$OUT/$ARCH"
     test "$(lipo -archs "$OUT/$ARCH")" = "$ARCH"
