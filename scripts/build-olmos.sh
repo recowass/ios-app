@@ -27,7 +27,14 @@ cp OlmosKiosk/Info.plist "$APP/Info.plist"
 plutil -replace CFBundleVersion -string "${GITHUB_RUN_NUMBER:-1}" "$APP/Info.plist"
 plutil -lint "$APP/Info.plist"
 printf 'APPL????' > "$APP/PkgInfo"
-# Deliberately unsigned: Sideloadly adds the user's own signature and profile on Windows.
+# Supply a real signature structure on BOTH slices for Windows re-signers.
+# This ad-hoc signature is not an Apple provisioning profile and cannot authorize installation.
+codesign --force --sign - --identifier com.recowass.olmoskiosk --timestamp=none \
+    --digest-algorithm=sha1,sha256 "$APP"
+codesign --verify --all-architectures --strict --verbose=2 "$APP"
+for ARCH in armv7 arm64; do
+    codesign --display --arch "$ARCH" --verbose=2 "$APP"
+done
 (cd "$OUT" && /usr/bin/zip -qr Los-Olmos-iOS9-unsigned.ipa Payload)
 python3 scripts/verify-olmos-ipa.py "$OUT/Los-Olmos-iOS9-unsigned.ipa"
 shasum -a 256 "$OUT/Los-Olmos-iOS9-unsigned.ipa" > "$OUT/SHA256SUMS.txt"

@@ -29,17 +29,24 @@ for i in range(count):
     pos = 28 if cpu == 12 else 32
     minimum = None
     entry = None
+    signature = None
     for _ in range(commands):
         cmd, length = struct.unpack_from('<II', thin, pos)
         assert length >= 8 and pos + length <= len(thin)
+        if cmd == 0x1D:  # LC_CODE_SIGNATURE: required by the Windows signing path
+            signature = struct.unpack_from('<II', thin, pos + 8)
         if cmd == 0x25:  # LC_VERSION_MIN_IPHONEOS
             minimum = struct.unpack_from('<I', thin, pos + 8)[0]
         if cmd == 0x80000028:  # LC_MAIN
             entry = struct.unpack_from('<Q', thin, pos + 8)[0]
         pos += length
     assert minimum == 0x90000, f'{cpu}: minimum is not iOS 9.0'
+    assert signature is not None, 'Missing LC_CODE_SIGNATURE'
+    sig_offset, sig_size = signature
+    assert sig_size > 0 and sig_offset + sig_size <= len(thin)
+    assert struct.unpack_from('>I', thin, sig_offset)[0] == 0xFADE0CC0, 'Invalid signature superblob'
     assert entry is not None
     if cpu == 12:
         assert entry % 2 == 0, 'armv7 ARM-mode entry point must be even'
     print(f'PASS: {"armv7" if cpu == 12 else "arm64"}, minimum iOS 9.0, LC_MAIN {entry}')
-print('PASS: IPA integrity and metadata. Unsigned; must be signed before installation.')
+print('PASS: IPA integrity and metadata. Ad-hoc signed for re-signing; needs an Apple signature and profile for installation.')

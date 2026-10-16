@@ -53,3 +53,13 @@ usuario los pulsa. No hay cambios en el servidor ni en sus archivos.
 Fuentes: [proyecto original](https://github.com/ha-dashboard/ios-app),
 [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview),
 [WebKit](https://webkit.org/debugging-webkit/).
+
+## Corrección del paquete para firmadores de Windows
+
+La revisión inicial no incluía `LC_CODE_SIGNATURE` en ninguno de los dos slices.
+Sideloadly rechazó el ejecutable durante la firma (error -18). Se añade una firma
+ad-hoc con hashes SHA-1 y SHA-256 antes de empaquetar, se verifica con codesign
+para todas las arquitecturas y se exige la estructura de firma en el verificador
+Mach-O. Esta firma de preparación NO es una firma de desarrollo ni un perfil
+válido de Apple. Sideloadly debe sustituirla usando el Apple ID del usuario.
+La instalación real permanece pendiente hasta probar la nueva IPA en el iPad.
