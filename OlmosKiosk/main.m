@@ -18,8 +18,8 @@ static NSString * const OlmosURLKey = @"OlmosPanelURL";
     // Device-only presentation: leave the hosted panel and its state logic untouched.
     // Attribute selectors follow every state refresh without polling or observers.
     NSString *panelStyle = @"(function(){var s=document.createElement('style');"
-        "s.textContent='#devices .device{-webkit-transform:translate(-50%,-50%) scale(1.2)!important;"
-        "transform:translate(-50%,-50%) scale(1.2)!important;}' +"
+        "s.textContent='#devices .device{-webkit-transform:translate(-50%,-50%) scale(1.32)!important;"
+        "transform:translate(-50%,-50%) scale(1.32)!important;}' +"
         "'#devices .device[style*=\"rgb(34, 197, 94)\"],"
         "#devices .device[style*=\"rgb(34,197,94)\"],"
         "#devices .device[style*=\"#22c55e\"]{color:#ffd400!important;}';"
