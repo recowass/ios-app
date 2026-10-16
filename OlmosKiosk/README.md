@@ -1,3 +1,7 @@
+# Versión v6 probada en iOS 9.3.5
+
+La instalación y el funcionamiento en el iPad del propietario están confirmados con jailbreak y AppSync Unified. [Resultado, descarga y SHA-256](TESTED-v6.md).
+
 # Los Olmos: visor web para iOS 9
 
 Esta variante independiente conserva las fuentes originales de HA Dashboard,
@@ -18,8 +22,8 @@ y se guarda en el dispositivo; no se publica en este repositorio.
 - No se promete compatibilidad con el frontend moderno completo de Home Assistant.
   El contenido del panel local debe admitir el WebKit antiguo.
 - La verificación automática comprueba ZIP, arquitecturas, mínimo de cada slice
-  y punto de entrada armv7. La prueba física de instalación y navegación en
-  iOS 9.3.5 sigue siendo necesaria y no está automatizada por este proyecto.
+  y punto de entrada armv7. La prueba física de instalación y apertura del panel en iOS 9.3.5 fue
+  confirmada por el propietario para la v6 (véase TESTED-v6.md).
 
 ## Generar la IPA desde Windows
 
@@ -62,4 +66,4 @@ ad-hoc con hashes SHA-1 y SHA-256 antes de empaquetar, se verifica con codesign
 para todas las arquitecturas y se exige la estructura de firma en el verificador
 Mach-O. Esta firma de preparación NO es una firma de desarrollo ni un perfil
 válido de Apple. Sideloadly debe sustituirla usando el Apple ID del usuario.
-La instalación real permanece pendiente hasta probar la nueva IPA en el iPad.
+La instalación real de la v6 está confirmada en el iPad del propietario con iOS 9.3.5, jailbreak y AppSync Unified; consulta TESTED-v6.md.

@@ -1,3 +1,7 @@
+> **Este fork: Los Olmos v6, probada en iPad con iOS 9.3.5.**
+> Visor web con iconos ampliados y activos amarillos. Instalación confirmada con jailbreak y AppSync Unified.
+> **[Descarga, resultado de prueba e instrucciones](OlmosKiosk/TESTED-v6.md)** · [Código del visor](OlmosKiosk/).
+
 # HA Dashboard
 
 [![Download on the App Store](https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83)](https://apps.apple.com/gb/app/ha-dash/id6759347912)
