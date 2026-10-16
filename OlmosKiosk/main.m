@@ -15,6 +15,18 @@ static NSString * const OlmosURLKey = @"OlmosPanelURL";
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    // Device-only presentation: leave the hosted panel and its state logic untouched.
+    // Attribute selectors follow every state refresh without polling or observers.
+    NSString *panelStyle = @"(function(){var s=document.createElement('style');"
+        "s.textContent='#devices .device{-webkit-transform:translate(-50%,-50%) scale(1.4)!important;"
+        "transform:translate(-50%,-50%) scale(1.4)!important;}' +"
+        "'#devices .device[style*=\"rgb(34, 197, 94)\"],"
+        "#devices .device[style*=\"rgb(34,197,94)\"],"
+        "#devices .device[style*=\"#22c55e\"]{color:#ffd400!important;}';"
+        "(document.head||document.documentElement).appendChild(s);}());";
+    [config.userContentController addUserScript:[[WKUserScript alloc]
+        initWithSource:panelStyle injectionTime:WKUserScriptInjectionTimeAtDocumentEnd
+        forMainFrameOnly:YES]];
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:config];
     self.webView.navigationDelegate = self;
     self.webView.UIDelegate = self;
